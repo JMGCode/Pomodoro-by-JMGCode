@@ -17,6 +17,7 @@ namespace Pomodoro_by_JMGCode
         int time = 0;
         bool focused = true;
         TimeSpan timeNow ;
+        TimeSpan timeSet;
 
         System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"C:\Users\jebus\Downloads\beep-07.wav");
 
@@ -70,6 +71,7 @@ namespace Pomodoro_by_JMGCode
         {
             if(BtnStart.Text == "Start")
             {
+                LblToMenu.Visible = false;
                 BtnStart.Text = "Reset";
                 timeNow = TimeSpan.FromSeconds(timeFocused);
                 time = timeFocused;
@@ -79,6 +81,7 @@ namespace Pomodoro_by_JMGCode
             }
             else
             {
+                LblToMenu.Visible = true;
                 BtnStart.Text = "Start";
                 timeNow = TimeSpan.FromSeconds(timeFocused);
                 time = timeFocused;
@@ -145,8 +148,67 @@ namespace Pomodoro_by_JMGCode
         {
             PBackground.Location = new Point(12, 12);
             Pmenu.Location = new Point(318, 12);
-            timeFocused = Convert.ToInt32(TxtFocusedTime.Text) * 60;
-            timeReset = Convert.ToInt32(TxtRestTime.Text) * 60;
+            timeFocused = (Convert.ToInt32(TxtFocusedTime.Text) * 60 ) + (Convert.ToInt32(TxtSegFocus.Text));
+            timeReset = (Convert.ToInt32(TxtRestTime.Text) * 60 ) + (Convert.ToInt32(TxtSegRest.Text));
+
+            //update time
+            timeNow = TimeSpan.FromSeconds(timeFocused);
+            time = timeFocused;
+            LblTime.Text = timeNow.ToString("mm':'ss");
+        }
+
+
+
+        private void TxtSegRest_Leave(object sender, EventArgs e)
+        {
+            if (TxtSegRest.Text.Length == 1)
+            {
+                TxtSegRest.Text = "0" + TxtSegRest.Text;
+            }
+            if (TxtSegRest.Text.Length == 0)
+            {
+                TxtSegRest.Text = "00";
+            }
+            if (Convert.ToInt32(TxtSegRest.Text) > 59) { TxtSegRest.Text = "59"; }
+        }
+
+        private void TxtRestTime_Leave(object sender, EventArgs e)
+        {
+            if (TxtRestTime.Text.Length == 1)
+            {
+                TxtRestTime.Text = "0" + TxtRestTime.Text;
+            }
+            if (TxtRestTime.Text.Length == 0)
+            {
+                TxtRestTime.Text = "00";
+            }
+            if (Convert.ToInt32(TxtRestTime.Text) > 59) { TxtRestTime.Text = "59"; }
+        }
+
+        private void TxtFocusedTime_Leave(object sender, EventArgs e)
+        {
+            if (TxtFocusedTime.Text.Length == 1)
+            {
+                TxtFocusedTime.Text = "0" + TxtFocusedTime.Text;
+            }
+            if (TxtFocusedTime.Text.Length == 0)
+            {
+                TxtFocusedTime.Text = "00";
+            }
+            if (Convert.ToInt32(TxtFocusedTime.Text) > 59) { TxtFocusedTime.Text = "59"; }
+        }
+
+        private void TxtSegFocus_Leave(object sender, EventArgs e)
+        {
+            if (TxtSegFocus.Text.Length == 1)
+            {
+                TxtSegFocus.Text = "0" + TxtSegFocus.Text;
+            }
+            if (TxtSegFocus.Text.Length == 0)
+            {
+                TxtSegFocus.Text = "00";
+            }
+            if (Convert.ToInt32(TxtSegFocus.Text) > 59) { TxtSegFocus.Text = "59"; }
         }
     }
 }
